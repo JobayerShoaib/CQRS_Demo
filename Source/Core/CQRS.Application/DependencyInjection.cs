@@ -1,6 +1,5 @@
-﻿using CQRS.Application.Common.Behaviours;
+﻿using CQRS.Application.Common.Behaviors;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CQRS.Application;
@@ -13,8 +12,11 @@ public static class DependencyInjection
 
         services.AddAutoMapper(assembly);
         services.AddValidatorsFromAssembly(assembly);
-        services.AddMediatR(configuration =>
-                                configuration.RegisterServicesFromAssembly(assembly));
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(assembly);
+            config.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
+        });
         //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         return services;
     }
