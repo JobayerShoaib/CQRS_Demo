@@ -1,4 +1,6 @@
-﻿using CQRS.Application.Repositories.Common;
+﻿using CQRS.Application.Common.Helpers;
+using CQRS.Application.Repositories.Common;
+using CQRS.Infrastructure.Helpers;
 using CQRS.Infrastructure.ImpRepositories.Common;
 using CQRS.Infrastructure.ImpRepositories.Setups.Countries;
 using CQRS.Infrastructure.ImpServices.Setups.Countries;
@@ -23,7 +25,7 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IGenericCommandRepository<>), typeof(GenericCommandRepository<>));
         services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
-        
+        services.AddScoped(typeof(IConnectionFactory), typeof(ConnectionFactory));
 
         Dependency(services, configuration);
         return services;
